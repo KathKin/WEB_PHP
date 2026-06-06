@@ -1,0 +1,1 @@
+<img src="/images/movie_img.webp" alt="Фильм">
