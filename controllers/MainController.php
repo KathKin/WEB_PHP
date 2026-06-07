@@ -9,11 +9,8 @@ class MainController extends TwigBaseController
   {
     $context = parent::getContext();
 
-    $context['menu_items'] = [
-      ['url_title' => 'movies', 'title' => 'Фильмы'],
-      ['url_title' => 'series', 'title' => 'Сериалы']
-    ];
-
+    $query = $this->pdo->query("SELECT * FROM m_s");
+    $context['m_s'] = $query->fetchAll();
     return $context;
   }
 }

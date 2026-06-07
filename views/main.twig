@@ -1,25 +1,25 @@
 {% extends "__layout.twig" %}
+{% from "btn.twig" import btn%}
 {% block content %}
+<div style="display: flex; justify-content: space-around;" class="row row-cols-5 g-4">
+{% for object in m_s %}
 
-{% for item in menu_items %}
-    <li class="list-group-item">
-    <ul class="nav nav-pills">
-      <li class="nav-item">
-        <a class="btn btn-primary" aria-current="page" href="{{item.url_title}}">
-          {{item.title}}
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{{item.url_title}}/image">
-          Картинка
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{{item.url_title}}/info">
-          Описание
-        </a>
-      </li>
-    </ul>
-  </li>
+    <div class="card h-100" style="border: 2px solid rgb(222, 222, 222);">
+      
+      <div style="width: 100%;">
+        <img src="{{object.image}}" class="card-img-top" alt="" style="height: 250px; object-fit: cover;">
+      </div>
+      <div style="width: 100% ;">
+          {{ btn(object.title,"", true)}}
+          
+        <div style="display: flex;">
+          {{ btn("Картинка","", false)}}
+          {{ btn("Описание","", false)}}
+        </div>        
+      </div>
+
+
+    </div>
 {% endfor %}
+</div>
 {% endblock %}
