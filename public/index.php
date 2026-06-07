@@ -1,5 +1,6 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once '../framework/autoload.php';
 require_once "../controllers/MainController.php";
 require_once "../controllers/MoviesController.php";
 require_once "../controllers/MoviesImageController.php";
@@ -25,23 +26,7 @@ $controller = new Controller404($twig);
 
 $pdo = new PDO("mysql:host=127.0.0.1;dbname=movie_series;charset=utf8", "root", "");
 
-if ($url == "/") {
-  $controller = new MainController($twig);
-} elseif (preg_match("#^/movies/image#", $url)) {
-  $controller = new MoviesImageController($twig);
-} elseif (preg_match("#^/movies/info#", $url)) {
-  $controller = new MoviesInfoController($twig);
-} elseif (preg_match("#^/movies#", $url)) {
-   $controller = new MoviesController($twig);
-} elseif (preg_match("#^/series/image#", $url)) {
-  $controller = new SeriesImageController($twig);
-} elseif (preg_match("#^/series/info#", $url)) {
-  $controller = new SeriesInfoController($twig);
-} elseif (preg_match("#^/series#", $url)) {
-  $controller = new SeriesController($twig);
-}
-
-if ($controller) {
-  $controller->setPDO($pdo);
-  $controller->get();
-}
+$router = new Router($twig, $pdo);
+$router->add("/", MainController::class);
+$router->add("/movies", MoviesController::class);
+$router->get_or_default(Controller404::class);
