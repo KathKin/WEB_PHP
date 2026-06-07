@@ -7,7 +7,7 @@ class MoviesImageController extends MoviesController{
   public function getContext(): array
   {
     $context = parent::getContext();
-    $context['image_url'] = '/images/movies_info.twig';
+    $context['image_url'] = '/images/movie_img.webp';
     $context['is_image'] = true;
 
     return $context;
