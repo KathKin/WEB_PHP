@@ -1,5 +1,13 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once "../controllers/MainController.php";
+require_once "../controllers/MoviesController.php";
+require_once "../controllers/MoviesImageController.php";
+require_once "../controllers/MoviesInfoController.php";
+require_once "../controllers/SeriesController.php";
+require_once "../controllers/SeriesImageController.php";
+require_once "../controllers/SeriesInfoController.php";
+require_once "../controllers/Controller404.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -9,56 +17,24 @@ $url = $_SERVER["REQUEST_URI"];
 $title = "";
 $template = "";
 $context = [];
+
+$controller = new Controller404($twig);
 if ($url == "/") {
-  $template = "main.twig";
-  $title = "Главная";
-  $context['menu_items'] = [
-    [
-      "title" => "Фильмы",
-      "url_title" => "movies"
-    ],
-    [
-      "title" => "Сериалы",
-      "url_title" => "series"
-    ]
-  ];
+  $controller = new MainController($twig);
+} elseif (preg_match("#^/movies/image#", $url)) {
+  $controller = new MoviesImageController($twig);
+} elseif (preg_match("#^/movies/info#", $url)) {
+  $controller = new MoviesInfoController($twig);
 } elseif (preg_match("#^/movies#", $url)) {
-  $template = "object.twig";
-  $title = "Фильмы";
-  $context['url_title'] = "movies";
-  $is_image = $url == "/movies/image";
-  $is_info = $url == "/movies/info";
-  $context['is_info'] = $is_info;
-  $context['is_image'] = $is_image;
-
-  if($is_image){
-    $template = "object_image.twig";
-    $context['image_url'] = '/images/movie_img.webp';
-  } elseif($is_info){
-    $template = "movies_info.twig";
-  }
-
+   $controller = new MoviesController($twig);
+} elseif (preg_match("#^/series/image#", $url)) {
+  $controller = new SeriesImageController($twig);
+} elseif (preg_match("#^/series/info#", $url)) {
+  $controller = new SeriesInfoController($twig);
 } elseif (preg_match("#^/series#", $url)) {
-  $template = "object.twig";
-  $title = "Сериалы";
-  $context['url_title'] = "series";
-
-  $is_image = $url == "/series/image";
-  $is_info = $url == "/series/info";
-
-  $context['is_info'] = $is_info;
-  $context['is_image'] = $is_image;
-
-
-  if($is_image){
-    $template = "object_image.twig";
-    $context['image_url'] = '/images/Series.webp';
-  }
-  elseif($is_info){
-    $template = "series_info.twig";
-  }
+  $controller = new SeriesController($twig);
 }
 
-$context['title'] = $title;
-
-echo $twig->render($template, $context);
+if ($controller) {
+  $controller->get();
+}
