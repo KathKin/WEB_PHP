@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(60 * 60 * 10);
+session_set_cookie_params(60);
 session_start();
 
 require_once '../vendor/autoload.php';
@@ -15,7 +15,8 @@ require_once "../controllers/SeriesObjectEditController.php";
 require_once "../middlewares/LoginRequiredMiddeware.php"; 
 require_once "../middlewares/SessionFixMiddleware.php";
 require_once "../controllers/SetWelcomeController.php";  
-
+require_once "../controllers/LoginController.php";
+require_once "../controllers/LogoutController.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -59,4 +60,6 @@ $router->add("/m_s/delete", SeriesObjectDeleteController::class)
 $router->add("/m_s/(?P<id>\d+)/edit", SeriesObjectEditController::class)
     ->middleware(new LoginRequiredMiddeware())
     ->middleware(new SessionFixMiddleware());
+$router->add("/login", LoginController::class);
+$router->add("/logout", LogoutController::class);
 $router->get_or_default(Controller404::class);

@@ -31,6 +31,7 @@ class ObjectController extends BaseSeriesTwigController
     $context['description'] = $data['description'];
     $context['info'] = $data['info'];
     $context['id'] = $data['id'];
+    $context['message'] = $_SESSION['welcome_message'] ?? 'Нет сообщения';
     $context["messages"] = isset($_SESSION['messages']) ? $_SESSION['messages'] : "";
 
     return $context;

@@ -1,7 +1,7 @@
 {% extends "__layout.twig" %}
 {% from "btn.twig" import btn%}
 {% block content %}
-<h4>Сообщение из сессии: {{my_session_message}} </h4>
+<h4>Сообщение из сессии: {{message}} </h4>
 <h4>Последние сообщения: 
   {% for m in messages %}
     {{m}} <br>
