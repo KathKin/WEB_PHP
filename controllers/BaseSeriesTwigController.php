@@ -6,7 +6,7 @@ class BaseSeriesTwigController extends TwigBaseController{
   {
     $context = parent::getContext();
 
-    $query = $this->pdo->query("SELECT DISTINCT title FROM types order by 1");
+    $query = $this->pdo->query("SELECT DISTINCT type FROM types order by 1");
     $types = $query->fetchAll();
     $context['types'] = $types;
 

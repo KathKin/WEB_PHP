@@ -11,7 +11,7 @@ class MainController extends BaseSeriesTwigController
     $context = parent::getContext();
 
         if(isset($_GET['type'])){
-      $query = $this->pdo->prepare("SELECT * FROM m_s JOIN types ON m_s.type_id = types.id WHERE types.type = :type");
+      $query = $this->pdo->prepare("SELECT m_s.* FROM m_s JOIN types ON m_s.type_id = types.id WHERE types.type = :type");
       $query->bindValue("type", $_GET['type']);
       $query->execute();
     }

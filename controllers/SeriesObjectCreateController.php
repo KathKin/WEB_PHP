@@ -6,7 +6,6 @@ class SeriesObjectCreateController extends BaseSeriesTwigController
   public $template = "series_create.twig";
   public function get(array $context)
   {
-    echo $_SERVER['REQUEST_METHOD'];
 
     parent::get($context);
   }
@@ -15,7 +14,7 @@ class SeriesObjectCreateController extends BaseSeriesTwigController
 
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $type = $_POST['type'];
+    $type_id = $_POST['type_id'];
     $info = $_POST['info'];
     
     $tmp_name = $_FILES['image']['tmp_name'];
@@ -25,8 +24,8 @@ class SeriesObjectCreateController extends BaseSeriesTwigController
     $image_url = "/media/$name";
 
     $sql = <<<EOL
-INSERT INTO m_s(title, description, type, info, image)
-VALUES(:title, :description, :type, :info, :image_url)
+INSERT INTO m_s(title, description, type_id, info, image)
+VALUES(:title, :description, :type_id, :info, :image_url)
 EOL;
 
 
@@ -34,12 +33,16 @@ EOL;
 
     $query->bindValue("title", $title);
     $query->bindValue("description", $description);
-    $query->bindValue("type", $type);
+    $query->bindValue("type_id", $type_id, PDO::PARAM_INT);
     $query->bindValue("info", $info);
     $query->bindValue("image_url", $image_url);
 
     $query->execute();
-    
+
+    $query = $this->pdo->query("SELECT DISTINCT type FROM types order by 1");
+    $types = $query->fetchAll();
+    $context['types'] = $types;
+
     $context['message'] = 'Вы успешно создали объект';
     $context['id'] = $this->pdo->lastInsertId();
 
