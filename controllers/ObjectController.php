@@ -25,12 +25,13 @@ class ObjectController extends BaseSeriesTwigController
     $query->bindValue("my_id", $this->params['id']);
     $query->execute();
     $data = $query->fetch();
-    
+
     $context['image'] = $data['image'];
     $context['title'] = $data['title'];
     $context['description'] = $data['description'];
     $context['info'] = $data['info'];
     $context['id'] = $data['id'];
+    $context["messages"] = isset($_SESSION['messages']) ? $_SESSION['messages'] : "";
 
     return $context;
   }
