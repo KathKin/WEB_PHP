@@ -1,6 +1,8 @@
 <?php
 
-class MainController extends TwigBaseController
+require_once "BaseSeriesTwigController.php";
+
+class MainController extends BaseSeriesTwigController
 {
   public $template = "main.twig";
   public $title = "Главная";
@@ -8,7 +10,15 @@ class MainController extends TwigBaseController
   {
     $context = parent::getContext();
 
-    $query = $this->pdo->query("SELECT * FROM m_s");
+        if(isset($_GET['type'])){
+      $query = $this->pdo->prepare("SELECT * FROM m_s WHERE type = :type");
+      $query->bindValue("type", $_GET['type']);
+      $query->execute();
+    }
+    else {
+      $query = $this->pdo->query("SELECT * FROM m_s");
+    }
+
     $context['m_s'] = $query->fetchAll();
     return $context;
   }

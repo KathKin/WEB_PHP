@@ -6,10 +6,10 @@
 <h3>{{description}}</h3>
 <ul class="nav nav-pills">
   <li class="nav-item">
-    {{ btn("Картинка","/m_s/" ~ id ~ "/image", is_image)}}
+    {{ btn("Картинка","/m_s/" ~ id ~ "?show=image", is_image)}}
   </li>
   <li class="nav-item">
-    {{ btn("Описание", "/m_s/" ~ id ~ "/info", is_info)}}
+    {{ btn("Описание", "/m_s/" ~ id ~ "?show=info", is_info)}}
   </li>
 </ul>
 <div class="container">
