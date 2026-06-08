@@ -1,14 +1,15 @@
 {% extends "__layout.twig" %}
 {% from "btn.twig" import btn%}
 {% block content %}
-<h1>Здесь {{title}}</h1>
+<h1>{{title}}</h1>
 
+<h3>{{description}}</h3>
 <ul class="nav nav-pills">
   <li class="nav-item">
-    {{ btn("Картинка","/" ~ url_title ~ "/image", is_image)}}
+    {{ btn("Картинка","/m_s/" ~ id ~ "/image", is_image)}}
   </li>
   <li class="nav-item">
-    {{ btn("Описание","/" ~ url_title ~ "/info", is_info)}}
+    {{ btn("Описание", "/m_s/" ~ id ~ "/info", is_info)}}
   </li>
 </ul>
 <div class="container">

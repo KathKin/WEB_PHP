@@ -10,11 +10,11 @@
         <img src="{{object.image}}" class="card-img-top" alt="" style="height: 250px; object-fit: cover;">
       </div>
       <div style="width: 100% ;">
-          {{ btn(object.title,"", true)}}
+          {{ btn(object.title, "/m_s/" ~ object.id, true)}}
           
         <div style="display: flex;">
-          {{ btn("Картинка","", false)}}
-          {{ btn("Описание","", false)}}
+          {{ btn("Картинка", "/m_s/" ~ object.id ~ "/image", false)}}
+          {{ btn("Описание", "/m_s/" ~ object.id ~ "/info", false)}}
         </div>        
       </div>
 

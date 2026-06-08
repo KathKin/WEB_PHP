@@ -9,5 +9,13 @@ abstract class BaseController
   public function getContext(): array {
     return [];
   }
+
+  public array $params; 
+
+  public function setParams(array $params)
+  {
+    $this->params = $params;
+  }
+  
   abstract public function get();
 }

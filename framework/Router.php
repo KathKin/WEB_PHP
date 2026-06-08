@@ -36,9 +36,11 @@ class Router
   
     $controller = $default_controller;
   
+    $matches = [];
+
     foreach ($this->routes as $route) {
     
-      if (preg_match($route->route_regexp, $url)) {
+      if (preg_match($route->route_regexp, $url, $matches)) {
       
         $controller = $route->controller;
       
@@ -48,6 +50,8 @@ class Router
 
     $controllerInstance = new $controller();
     $controllerInstance->setPDO($this->pdo);
+    
+    $controllerInstance->setParams($matches);
 
   
   
