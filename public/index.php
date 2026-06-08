@@ -4,6 +4,7 @@ require_once '../framework/autoload.php';
 require_once "../controllers/MainController.php";
 require_once "../controllers/Controller404.php";
 require_once "../controllers/ObjectController.php";
+require_once "../controllers/SearchController.php"; 
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -27,4 +28,5 @@ $router->add("/movies", MoviesController::class);
 $router->add("/m_s/(?P<id>\d+)", ObjectController::class);
 $router->add("/m_s/(?P<id>\d+)?show=image", ObjectController::class); 
 $router->add("/m_s/(?P<id>\d+)?show=info", ObjectController::class);  
+$router->add("/search", SearchController::class);
 $router->get_or_default(Controller404::class);
