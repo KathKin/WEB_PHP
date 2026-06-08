@@ -4,6 +4,12 @@ class Route
 {
   public string $route_regexp;
   public $controller;
+  public array $middlewareList = [];
+  public function middleware(BaseMiddleware $m): Route
+  {
+    array_push($this->middlewareList, $m);
+    return $this;
+  }
 
   public function __construct($route_regexp, $controller)
   {
@@ -32,6 +38,7 @@ class Router
     $url = $_SERVER["REQUEST_URI"];
 
     $controller = $default_controller;
+    $newRoute = null;
     $path = parse_url($url, PHP_URL_PATH);
     $matches = [];
 
@@ -40,7 +47,7 @@ class Router
       if (preg_match($route->route_regexp, $path, $matches)) {
       
         $controller = $route->controller;
-      
+        $newRoute = $route;
         break;
       }
     }
@@ -53,11 +60,18 @@ class Router
     if ($controllerInstance instanceof TwigBaseController) {
       $controllerInstance->setTwig($this->twig);
     }
-
+    if ($newRoute) {
+      foreach ($newRoute->middlewareList as $m) {
+        $m->apply($controllerInstance, []);
+      }
+    }
     return $controllerInstance->process_response();
   }
-  public function add($route_regexp, $controller)
+  public function add($route_regexp, $controller): Route
   {
-    array_push($this->routes, new Route("#^$route_regexp$#", $controller));
+    $route = new Route("#^$route_regexp$#", $controller);
+    array_push($this->routes, $route);
+
+    return $route;
   }
 }
