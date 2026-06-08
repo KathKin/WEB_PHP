@@ -6,6 +6,15 @@
 
     <div class="card h-100" style="border: 2px solid rgb(222, 222, 222);">
       
+      <div class="position-absolute" style="right: 4px; top: 4px;">
+        <form action="/m_s/delete" method="POST">
+          <input type="hidden" name="id" value="{{object.id}}">
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-times"></i>
+          </button>
+        </form>
+      </div>
+
       <div style="width: 100%;">
         <img src="{{object.image}}" class="card-img-top" alt="" style="height: 250px; object-fit: cover;">
       </div>

@@ -7,7 +7,7 @@ require_once "../controllers/ObjectController.php";
 require_once "../controllers/SearchController.php"; 
 require_once "../controllers/SeriesObjectCreateController.php";
 require_once "../controllers/SeriesTypeCreateController.php";   
-require_once "../controllers/SeriesTypeCreateController.php";
+require_once "../controllers/SeriesObjectDeleteController.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -34,5 +34,5 @@ $router->add("/m_s/(?P<id>\d+)?show=info", ObjectController::class);
 $router->add("/search", SearchController::class);
 $router->add("/m_s/create", SeriesObjectCreateController::class);
 $router->add("/m_s/createtype", SeriesTypeCreateController::class);
-$router->add("/synthesizers/delete", SeriesObjectDeleteController::class);
+$router->add("/m_s/delete", SeriesObjectDeleteController::class);
 $router->get_or_default(Controller404::class);
