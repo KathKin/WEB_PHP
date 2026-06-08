@@ -5,7 +5,6 @@ class Route
   public string $route_regexp;
   public $controller;
 
-
   public function __construct($route_regexp, $controller)
   {
     $this->route_regexp = $route_regexp;
@@ -22,7 +21,6 @@ class Router
   protected $twig;
   protected $pdo;
 
-
   public function __construct($twig, $pdo)
   {
     $this->twig = $twig;
@@ -33,7 +31,6 @@ class Router
   {
     $url = $_SERVER["REQUEST_URI"];
 
-  
     $controller = $default_controller;
     $path = parse_url($url, PHP_URL_PATH);
     $matches = [];
@@ -53,14 +50,11 @@ class Router
 
     $controllerInstance->setParams($matches);
 
-  
-  
     if ($controllerInstance instanceof TwigBaseController) {
       $controllerInstance->setTwig($this->twig);
     }
 
-  
-    return $controllerInstance->get();
+    return $controllerInstance->process_response();
   }
   public function add($route_regexp, $controller)
   {
